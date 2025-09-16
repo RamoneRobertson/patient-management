@@ -15,10 +15,12 @@ import java.util.UUID;
 @Setter
 public class Patient {
   @Id
+  @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
 
   @NotNull
+  @Column(name = "name")
   private String name;
 
   @NotNull
@@ -27,12 +29,15 @@ public class Patient {
   private String email;
 
   @NotNull
+  @Column(name = "address")
   private String address;
 
   @NotNull
+  @Column(name = "date_of_birth")
   private LocalDate dateOfBirth;
 
   @NotNull
+  @Column(name = "registered_date")
   private LocalDate registeredDate;
 
 }
