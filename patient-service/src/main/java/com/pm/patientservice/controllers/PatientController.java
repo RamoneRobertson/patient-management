@@ -2,6 +2,7 @@ package com.pm.patientservice.controllers;
 
 import com.pm.patientservice.dtos.PatientDto;
 import com.pm.patientservice.dtos.RegisterPatientRequest;
+import com.pm.patientservice.dtos.UpdatePatientRequest;
 import com.pm.patientservice.services.PatientService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -42,8 +43,17 @@ public class PatientController {
     return ResponseEntity.created(uri).body(patientDto);
   }
 
-  @PostMapping
-  public ResponseEntity<PatientDto> updatePatient(){
+  @PostMapping("/{patientId}")
+  public ResponseEntity<PatientDto> updatePatient(
+          @PathVariable UUID patientId, @Valid @RequestBody UpdatePatientRequest request
+  ) {
+    var patientDto = patientService.updatePatient(patientId, request);
+    return ResponseEntity.ok().body(patientDto);
+  }
 
+  @DeleteMapping("/{patientId}")
+  public ResponseEntity<Void> deletePatient(@PathVariable UUID patientId){
+    patientService.deletePatient(patientId);
+    return ResponseEntity.noContent().build();
   }
 }

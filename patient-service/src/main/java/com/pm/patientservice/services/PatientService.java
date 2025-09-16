@@ -2,6 +2,7 @@ package com.pm.patientservice.services;
 
 import com.pm.patientservice.dtos.PatientDto;
 import com.pm.patientservice.dtos.RegisterPatientRequest;
+import com.pm.patientservice.dtos.UpdatePatientRequest;
 import com.pm.patientservice.mappers.PatientMapper;
 import com.pm.patientservice.models.Patient;
 import com.pm.patientservice.repositories.PatientRepository;
@@ -32,5 +33,17 @@ public class PatientService {
     var patient = patientMapper.toEntity(request);
     patientRepository.save(patient);
     return patientMapper.toDto(patient);
+  }
+
+  public PatientDto updatePatient(UUID patientId, UpdatePatientRequest request) {
+    var patient = patientRepository.findById(patientId).orElseThrow();
+    patientMapper.updatePatient(patient, request);
+    patientRepository.save(patient);
+    return patientMapper.toDto(patient);
+  }
+
+  public void deletePatient(UUID patientId) {
+    var patient = patientRepository.findById(patientId).orElseThrow();
+    patientRepository.delete(patient);
   }
 }
