@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @Mapper(componentModel = "spring")
 public interface PatientMapper {
+  @Mapping(target = "patientId", source = "id")
   PatientDto toDto(Patient patient);
   Patient toEntity(RegisterPatientRequest request);
   Patient toEntity(PatientDto patientDto);

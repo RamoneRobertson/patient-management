@@ -27,7 +27,7 @@ public class PatientController {
     return ResponseEntity.ok().body(patients);
   }
 
-  @GetMapping("/{userId}")
+  @GetMapping("/{patientId}")
   public ResponseEntity<PatientDto> getPatient(@PathVariable UUID patientId){
     var patientDto = patientService.getPatient(patientId);
     return ResponseEntity.ok().body(patientDto);
