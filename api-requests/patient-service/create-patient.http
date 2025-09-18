@@ -4,8 +4,8 @@ Content-Type: application/json
 
 {
   "name": "Naruto Uzamaki",
-  "email": "james.harris@example.com",
-  "password": "I hate my dad",
+  "email": "hokage@hiddenleaf.com",
+  "password": "Hinata",
   "address": "7-chome, UzamakiMichi, Hidden Leaf Village",
   "dateOfBirth": "1993-10-10",
   "registeredDate": "1993-12-01"

@@ -7,8 +7,10 @@ import com.pm.patientservice.exceptions.PatientNotFoundException;
 import com.pm.patientservice.mappers.PatientMapper;
 import com.pm.patientservice.models.Patient;
 import com.pm.patientservice.repositories.PatientRepository;
+import jakarta.validation.groups.Default;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.UUID;
@@ -39,7 +41,9 @@ public class PatientService {
     return patientMapper.toDto(patient);
   }
 
-  public PatientResponseDto updatePatient(UUID patientId, PatientRequestDTO request) {
+  public PatientResponseDto updatePatient(
+          UUID patientId,
+          @Validated(Default.class) PatientRequestDTO request ) {
     var patient = patientRepository.findById(patientId).orElseThrow(() -> new PatientNotFoundException("Patient not found with ID: " + patientId));
     if(patientRepository.existsByEmail(request.getEmail())) {
       throw new EmailAlreadyExistsException("A patient with this email already exists: "
