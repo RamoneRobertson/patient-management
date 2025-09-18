@@ -2,9 +2,12 @@ package com.pm.patientservice.controllers;
 
 import com.pm.patientservice.dtos.PatientResponseDto;
 import com.pm.patientservice.dtos.PatientRequestDTO;
+import com.pm.patientservice.dtos.validators.CreatePatientValidationGroup;
 import com.pm.patientservice.services.PatientService;
 import jakarta.validation.Valid;
+import jakarta.validation.groups.Default;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -44,7 +47,8 @@ public class PatientController {
 
   @PutMapping("/{patientId}")
   public ResponseEntity<PatientResponseDto> updatePatient(
-          @PathVariable UUID patientId, @Valid @RequestBody PatientRequestDTO request
+          @PathVariable UUID patientId,
+          @Valid @RequestBody PatientRequestDTO request
   ) {
     var patientDto = patientService.updatePatient(patientId, request);
     return ResponseEntity.ok().body(patientDto);

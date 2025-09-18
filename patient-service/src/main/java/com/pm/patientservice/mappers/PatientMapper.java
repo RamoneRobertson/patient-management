@@ -13,5 +13,7 @@ public interface PatientMapper {
   PatientResponseDto toDto(Patient patient);
   Patient toEntity(PatientRequestDTO request);
   Patient toEntity(PatientResponseDto patientResponseDto);
+
+  @Mapping(target = "registeredDate", ignore = true)
   void updatePatient(@MappingTarget Patient patient,  PatientRequestDTO request);
 }
