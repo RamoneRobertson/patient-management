@@ -37,7 +37,7 @@ public class PatientController {
 
   @PostMapping
   public ResponseEntity<PatientResponseDto> registerPatient(
-          @Valid @RequestBody PatientRequestDTO request,
+          @Validated({Default.class, CreatePatientValidationGroup.class}) @RequestBody PatientRequestDTO request,
           UriComponentsBuilder uriComponentsBuilder
   ) {
     var patientDto = patientService.registerPatient(request);
@@ -48,7 +48,7 @@ public class PatientController {
   @PutMapping("/{patientId}")
   public ResponseEntity<PatientResponseDto> updatePatient(
           @PathVariable UUID patientId,
-          @Valid @RequestBody PatientRequestDTO request
+          @Validated({Default.class}) @RequestBody PatientRequestDTO request
   ) {
     var patientDto = patientService.updatePatient(patientId, request);
     return ResponseEntity.ok().body(patientDto);

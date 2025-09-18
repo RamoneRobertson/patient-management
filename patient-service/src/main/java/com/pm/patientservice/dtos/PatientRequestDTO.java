@@ -16,16 +16,14 @@ public class PatientRequestDTO {
   @Email(message = "Must use a valid email address.")
   private String email;
 
-  @NotBlank(message = "Password is required.")
-  private String password;
-
   @NotBlank(message = "Address is required.")
   private String address;
 
   @NotBlank(message = "Date of Birth is required.")
   private String dateOfBirth;
 
-  @NotBlank(message = "Registration date is required.")
+  @NotBlank(groups = CreatePatientValidationGroup.class, message =
+          "Registered date is required")
   private String registeredDate;
 
 }
