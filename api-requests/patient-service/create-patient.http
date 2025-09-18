@@ -1,11 +1,11 @@
-### POST request to /patients
+### Creates a new patient entity
 POST http://localhost:4000/patients
 Content-Type: application/json
 
 {
   "name": "Naruto Uzamaki",
-  "email": "seventhhokage@hidden-leaf.com",
-  "password": "Hinata",
+  "email": "james.harris@example.com",
+  "password": "I hate my dad",
   "address": "7-chome, UzamakiMichi, Hidden Leaf Village",
   "dateOfBirth": "1993-10-10",
   "registeredDate": "1993-12-01"

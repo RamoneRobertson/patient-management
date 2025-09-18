@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
-public class PatientDto {
+public class PatientResponseDto {
   private UUID patientId;
   private String name;
   private String email;

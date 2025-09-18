@@ -1,0 +1,13 @@
+### PUT request to upadte a patient
+PUT http://localhost:4000/patients/123e4567-e89b-12d3-a456-426614174000
+Content-Type: application/json
+
+{
+    "name": "Yusuke Yurumeshi",
+    "email": "detective@spirit-world.com",
+    "password": "Keiko",
+    "address": "5-chome Sarayashi, Hachida, Ningenkai",
+    "dateOfBirth": "1990-12-03"
+}
+
+###

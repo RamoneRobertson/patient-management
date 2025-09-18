@@ -1,8 +1,7 @@
 package com.pm.patientservice.controllers;
 
-import com.pm.patientservice.dtos.PatientDto;
-import com.pm.patientservice.dtos.RegisterPatientRequest;
-import com.pm.patientservice.dtos.UpdatePatientRequest;
+import com.pm.patientservice.dtos.PatientResponseDto;
+import com.pm.patientservice.dtos.PatientRequestDTO;
 import com.pm.patientservice.services.PatientService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -22,20 +21,20 @@ public class PatientController {
   }
 
   @GetMapping
-  public ResponseEntity<List<PatientDto>> getPatients() {
+  public ResponseEntity<List<PatientResponseDto>> getPatients() {
     var patients = patientService.getPatients();
     return ResponseEntity.ok().body(patients);
   }
 
   @GetMapping("/{patientId}")
-  public ResponseEntity<PatientDto> getPatient(@PathVariable UUID patientId){
+  public ResponseEntity<PatientResponseDto> getPatient(@PathVariable UUID patientId){
     var patientDto = patientService.getPatient(patientId);
     return ResponseEntity.ok().body(patientDto);
   }
 
   @PostMapping
-  public ResponseEntity<PatientDto> registerPatient(
-          @Valid @RequestBody RegisterPatientRequest request,
+  public ResponseEntity<PatientResponseDto> registerPatient(
+          @Valid @RequestBody PatientRequestDTO request,
           UriComponentsBuilder uriComponentsBuilder
   ) {
     var patientDto = patientService.registerPatient(request);
@@ -43,9 +42,9 @@ public class PatientController {
     return ResponseEntity.created(uri).body(patientDto);
   }
 
-  @PostMapping("/{patientId}")
-  public ResponseEntity<PatientDto> updatePatient(
-          @PathVariable UUID patientId, @Valid @RequestBody UpdatePatientRequest request
+  @PutMapping("/{patientId}")
+  public ResponseEntity<PatientResponseDto> updatePatient(
+          @PathVariable UUID patientId, @Valid @RequestBody PatientRequestDTO request
   ) {
     var patientDto = patientService.updatePatient(patientId, request);
     return ResponseEntity.ok().body(patientDto);

@@ -1,13 +1,13 @@
 package com.pm.patientservice.services;
 
-import com.pm.patientservice.dtos.PatientDto;
-import com.pm.patientservice.dtos.RegisterPatientRequest;
-import com.pm.patientservice.dtos.UpdatePatientRequest;
+import com.pm.patientservice.dtos.PatientResponseDto;
+import com.pm.patientservice.dtos.PatientRequestDTO;
+import com.pm.patientservice.exceptions.EmailAlreadyExistsException;
+import com.pm.patientservice.exceptions.PatientNotFoundException;
 import com.pm.patientservice.mappers.PatientMapper;
 import com.pm.patientservice.models.Patient;
 import com.pm.patientservice.repositories.PatientRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,24 +19,32 @@ public class PatientService {
   private final PatientRepository patientRepository;
   private final PatientMapper patientMapper;
 
-  public List<PatientDto> getPatients() {
+  public List<PatientResponseDto> getPatients() {
     List<Patient> patients = patientRepository.findAll();
     return patients.stream().map(patientMapper::toDto).toList();
   }
 
-  public PatientDto getPatient(UUID patientId) {
+  public PatientResponseDto getPatient(UUID patientId) {
     var patient = patientRepository.findById(patientId).orElseThrow();
     return patientMapper.toDto(patient);
   }
 
-  public PatientDto registerPatient(RegisterPatientRequest request){
+  public PatientResponseDto registerPatient(PatientRequestDTO request) {
+    if(patientRepository.existsByEmail(request.getEmail())) {
+      throw new EmailAlreadyExistsException("A patient with this email already exists: "
+              + request.getEmail());
+    }
     var patient = patientMapper.toEntity(request);
     patientRepository.save(patient);
     return patientMapper.toDto(patient);
   }
 
-  public PatientDto updatePatient(UUID patientId, UpdatePatientRequest request) {
-    var patient = patientRepository.findById(patientId).orElseThrow();
+  public PatientResponseDto updatePatient(UUID patientId, PatientRequestDTO request) {
+    var patient = patientRepository.findById(patientId).orElseThrow(() -> new PatientNotFoundException("Patient not found with ID: " + patientId));
+    if(patientRepository.existsByEmail(request.getEmail())) {
+      throw new EmailAlreadyExistsException("A patient with this email already exists: "
+              + request.getEmail());
+    }
     patientMapper.updatePatient(patient, request);
     patientRepository.save(patient);
     return patientMapper.toDto(patient);
